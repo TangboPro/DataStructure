@@ -1,45 +1,11 @@
 /**
- * BST  JAVA实现
- * 查找，添加，删除，显示
- */
-public class Main {
-    public static void main(String[] args) {
-        //测试
-        BiTree tree=new BiTree();
-        tree.InsertBst(tree.heard, 8);
-        tree.InsertBst(tree.heard, 3);
-        tree.InsertBst(tree.heard, 1);
-        tree.InsertBst(tree.heard, 6);
-        tree.InsertBst(tree.heard, 4);
-        tree.InsertBst(tree.heard, 7);
-        tree.InsertBst(tree.heard, 10);
-        tree.InsertBst(tree.heard, 14);
-        tree.InsertBst(tree.heard, 13);
-        tree.ShowBST(tree.heard);
-        tree.DeleteBST(tree.heard,13);
-        System.out.println();
-        tree.ShowBST(tree.heard);
-    }
-}
-
-/**
- * 结点类
- */
-class BiTreeNode{
-    public int key;
-    public BiTreeNode lchild;//左子树
-    public BiTreeNode rchild;//右子树
-    public BiTreeNode parent;
-}
-
-/**
  * BST类
  */
-class BiTree {
-    public BiTreeNode heard;//头结点
+public class BiTree {
+
+    public BiTreeNode head;//头结点
     /**
      * BST查找
-     *
      * @param T 当前结点
      * @param e 查找的关键字
      * @param p p为T的父结点
@@ -58,34 +24,32 @@ class BiTree {
             return T;
         }
     }
-
     /**
      * 插入
-     *
      * @param T 根结点
      * @param e 插入key
      */
-    public void InsertBst(BiTreeNode T, int e) {
+    public BiTreeNode InsertBst(BiTreeNode T, int e) {
         BiTreeNode node = new BiTreeNode();
         node.key = e;
-        if (heard == null) {//根节点为空
-            heard = node;//node就为根节点
-            heard.parent = null;
-            return;
+        if (head == null) {//根节点为空
+            head = node;//node就为根节点
+            head.parent = null;
+            return head;
         }
+
         BiTreeNode f = SearchBST(T, e, T);//查找
         if (f.key == e) {
             System.out.print("该key已经存在：" + e);
         } else {
             node.parent = f;//指向父节点
-
             if (f.key > e) {
                 f.lchild = node;//在左孩子插入
             } else {
                 f.rchild = node;//在右孩子插入
             }
         }
-        return;
+        return node;
     }
 
     /**
@@ -93,10 +57,12 @@ class BiTree {
      * @param T 头节点
      * @param e 删除key
      */
-    public void DeleteBST(BiTreeNode T, int e) {
+    public BiTreeNode DeleteBST(BiTreeNode T, int e) {
 
         BiTreeNode p = SearchBST(T, e, T);
+        BiTreeNode parent=null;
         if (p.key == e) {
+            parent=p.parent;//获取父节点
             BiTreeNode q, s;
             if (p.rchild == null && p.lchild == null)//叶子结点
             {
@@ -129,8 +95,10 @@ class BiTree {
             }
         }
         else {
-            System.out.print("该key不存在："+e);
+            System.out.print("该key不存在："+e+"\n");
         }
+
+        return parent;//返回父节点
     }
 
     /**
@@ -146,6 +114,3 @@ class BiTree {
     }
 
 }
-
-
-
